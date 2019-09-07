@@ -1,51 +1,46 @@
+#include <algorithm>
 #include <string>
 #include <vector>
-#include <iterator>
 #include <iostream>
-#include <algorithm>s
 using namespace std;
 
-//ì˜¤ë¦„ì°¨ìˆœì„ ë§Œë“¤ê¸° ìœ„í•œ ë¹„êµ í•¨ìˆ˜
-bool esc(int a, int b) {
-	return a < b;
+//µÎ °³ÀÇ ¹®ÀÚ¿­À» ºÙ¿´À» ¶§ °ªÀÌ ´õ Å« ¼ö·Î Á¤·ÄÇÏ°Ô ¸¸µé¾îÁÖ´Â ÇÔ¼ö 
+bool esc(string a, string b)
+{
+	//6, 10 ÀÏ¶§ 610 °ú 106À» ºñ±³, a+b°¡ ´õ Å©¹Ç·Î true ¹İÈ¯
+	if (b + a < a + b)
+		return true;
+	return false;
 }
 
+string solution(vector<int> numbers) {
+	string answer = "";
 
-vector<int> solution(vector<int> array, vector<vector<int>> commands) {
-	vector<int> answer;
-
-	//ìë¥¸ ë°°ì—´ì„ ë‹´ì•„ ì •ë ¬í•˜ëŠ” ë²¡í„° ë³€ìˆ˜ 
-	vector<int> temp;
-
-
-	for (int i = 0; i < commands.size();i++)
-	{
-		//ë²¡í„° ìš”ì†Œë¡œ í• ë‹¹í•  ìˆ˜ë§Œí¼ ì¬ì¡°ì •
-		//commands[i][0] : ë°°ì—´ì˜ x ë²ˆì§¸ ìš”ì†Œë¶€í„°
-		//commands[i][1] : ë°°ì—´ì˜ x ë²ˆì§¸ ìš”ì†Œê¹Œì§€
-
-		temp.resize(commands[i][1] - commands[i][0]+1);
-		
-		//temp ë²¡í„°ì— ìš”ì†Œê°’ ì§‘ì–´ë„£ê¸°
-		//copyì“°ë ¤ê³  í–ˆëŠ”ë° ì•ˆë˜ì„œ ë°˜ë³µë¬¸ ëŒë¦¼
-		for (int k = 0; k < temp.size();k++)
-			temp[k] = array[k + commands[i][0]-1];
-		
-		//ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
-		sort(temp.begin(), temp.end(), esc);	
-		
-		//kë²ˆì§¸ ìš”ì†Œë¥¼ answerì˜ ì›ì†Œë¡œ ì¶”ê°€
-		answer.push_back(temp[commands[i][2] - 1]);
+	vector<string> string_num;
+	//int Çü ÀÎµ¦½ºµéÀ» ÀüºÎ ½ºÆ®¸µÀ¸·Î º¯È¯
+	for (int i = 0; i<numbers.size(); i++) {
+		string_num.push_back(to_string(numbers[i]));
 	}
+	//À§ÀÇ esc ÇÔ¼ö¸¦ ÀÌ¿ëÇÏ¿© ÇØ´ç º¤ÅÍ¿¡ Á¸ÀçÇÏ´Â ¹®ÀÚ¿­ ÀÎµ¦½º Á¤·Ä
+	sort(string_num.begin(), string_num.end(), esc);
 
+	//ÇÏ³ªÀÇ string¿¡ ÀüºÎ ´õÇØ °¡Àå Å«¼ö¸¦ ¸¸µë
+	for (auto iter = string_num.begin(); iter != string_num.end(); iter++)
+		answer += *iter;
+	//¸¸¾à 0 0 0 0 = 0000ÀÏ °æ¿ì¸¦ ´ëºñÇÏ¿© 0À¸·Î ¸¸µé¾îÁÖ´Â Á¶°Ç¹® ÇÏ³ª¸¦ Ãß°¡ÇÑ´Ù
+	if (answer[0] == '0')
+		answer = "0";
+
+	//´ä ¹İÈ¯
 	return answer;
 }
 
+
+
 int main(void)
 {
-	vector<int> arrays = { 1,5,2,6,3,7,4 };
-	vector<vector<int>> commands = { {2, 5, 3},{4, 4, 1},{1, 7, 3} };
-	vector<int> answer = solution(arrays, commands);
-	for(int i = 0; i< answer.size(); i++)
-		cout << answer[i] << endl;
+	vector <int> hawi = { 9,96,963,97,98,972,6,10,2 };
+	cout << solution(hawi)<<endl;
 }
+
+
