@@ -3,6 +3,13 @@
 #include <iostream>
 using namespace std;
 
+/*
+ 조건이 꽤나 있는 문제 
+ 왼손에 가까운 수 1,4,7
+ 오른손에 가까운 수 3,6,9는 각 손으로 선택하고
+ 2,5,8,0은 더 가까운 위치에 존재하는 손가락이 가는 것이고,
+ 겨리가 동일할땐 주손잡이 손이 선택한다.
+*/
 pair<int,int> lpos = make_pair(3,0);
 pair<int,int> rpos = make_pair(3,2);
 int pos[10][2] = {{3,1},{0,0},{0,1},{0,2},
